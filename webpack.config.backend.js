@@ -50,7 +50,8 @@ module.exports = {
     // Insert code at the top of the generated bundle file :
     //  - ensure window is undefined
     //  - add source map support to get a detailed stack trace when an exception is thrown
-    new webpack.BannerPlugin('window = undefined; require("source-map-support").install();', {
+    new webpack.BannerPlugin({
+      banner: 'window = undefined; require("source-map-support").install();',
       raw: true,
       entryOnly: false
     })

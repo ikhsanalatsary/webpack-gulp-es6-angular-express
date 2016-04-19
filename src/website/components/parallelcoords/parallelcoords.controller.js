@@ -1,6 +1,7 @@
 class ParallelcoordsController {
-  /*@ngInject*/
+
   constructor($scope, $http) {
+    'ngInject';
     this.name = 'parallelcoords';
     this.$http = $http;
     this.$scope = $scope;

@@ -1,10 +1,12 @@
+import registerAngularModule from 'registerAngularModule';
+
 function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);
 }
 
 var reqContext = require.context("./", true, /^.*\/index\.js$/);
 
-var components = requireAll(reqContext);
+var components = _.map(requireAll(reqContext), m => m.default);
 
 var componentsName = _.map(components, (c) => c.module.name);
 

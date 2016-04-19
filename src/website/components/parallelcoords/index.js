@@ -1,4 +1,5 @@
 import ParallelCoordsDirective from './parallelcoords.directive';
+import registerAngularModule from 'registerAngularModule';
 
 let parallelcoordsModule = registerAngularModule('parallelcoords', [])
   .directive('parallelcoords', ParallelCoordsDirective);

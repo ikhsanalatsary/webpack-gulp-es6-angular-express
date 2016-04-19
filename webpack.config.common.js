@@ -42,7 +42,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['ng-annotate', 'babel']
+        loaders: ['ng-annotate?es6=true', 'babel?presets[]=es2015-native-modules']
       },
       // use json loader to automatically parse JSON files content when importing them
       {
@@ -83,14 +83,15 @@ module.exports = {
   .concat(appConfig.production ?
       // Recommended webpack plugins when building the application for production  :
       [
-        // Assign the module and chunk ids by occurrence count. Ids that are used often get lower (shorter) ids.
-        // This make ids predictable, reduces to total file size and is recommended.
-        new webpack.optimize.OccurenceOrderPlugin(true),
         // Search for equal or similar files and deduplicate them in the output.
         // This comes with some overhead for the entry chunk, but can reduce file size effectively.
         new webpack.optimize.DedupePlugin(),
         // Minimize all JavaScript output of chunks. Loaders are switched into minimizing mode.
         // You can pass an object containing UglifyJs options.
+        new webpack.LoaderOptionsPlugin({
+          minimize: true,
+          debug: false
+        }),
         new webpack.optimize.UglifyJsPlugin({
           compress: {
             warnings: false,

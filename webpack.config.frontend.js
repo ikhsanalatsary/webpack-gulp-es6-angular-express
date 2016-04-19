@@ -36,7 +36,8 @@ module.exports = {
     },
     // The root directory (absolute path) that contains the application modules,
     // enables to import modules relatively to it
-    root: path.resolve(__dirname, 'src/website')
+    modules: [path.resolve(__dirname, 'src/website'),
+              'node_modules']
   },
   // Application entry points
   entry: {
@@ -123,7 +124,7 @@ module.exports = {
     // Automatically generate the index.html file including all webpack generated assets
     new HtmlWebpackPlugin({
       title: 'Webpack Angular Test',
-      template: 'src/website/index.tpl.html'
+      template: 'src/website/index.ejs'
     })
   ].concat(!appConfig.watch ?
   [
