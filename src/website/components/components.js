@@ -1,30 +1,46 @@
+import uiRouter from 'angular-ui-router';
+import ocLazyLoad from 'oclazyload';
+
 import registerAngularModule from 'registerAngularModule';
 
 function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);
 }
 
-var reqContext = require.context("./", true, /^.*\/index\.js$/);
+var moduleDescriptionContext = require.context("./", true, /^.*\/description\.js$/);
 
-var components = _.map(requireAll(reqContext), m => m.default);
+var moduleNames = _.map(moduleDescriptionContext.keys(), (k, i) => {
+  var pos = k.indexOf('/');
+  var pos2 = k.lastIndexOf('/');
+  return k.substr(pos+1, pos2-pos-1);
+});
 
-var componentsName = _.map(components, (c) => c.module.name);
+const components = _.map(requireAll(moduleDescriptionContext), m => m.default);
 
-let componentsModule = registerAngularModule('app.components', componentsName)
+const componentsModule = registerAngularModule('app.components', [uiRouter, ocLazyLoad])
   .config(($stateProvider, $urlRouterProvider) => {
 
     'ngInject';
 
     $urlRouterProvider.otherwise(components[0].url);
 
-    _.each(components, (c) =>
+    _.each(components, (c, i) =>
       $stateProvider
         .state(c.url, {
           url: '/' + c.url,
-          template: c.template
-      })
-    );
-
+          template: c.template,
+          resolve: {
+            loadModule: ($q, $ocLazyLoad) => {
+              return $q((resolve) => {
+                var load = require('bundle?lazy!./'+moduleNames[i]+'/index');
+                load(function(module) {
+                  resolve($ocLazyLoad.load({name: module.default.name}));
+                });
+              });
+            }
+          }
+        }
+      ));
   });
 
 export default {
