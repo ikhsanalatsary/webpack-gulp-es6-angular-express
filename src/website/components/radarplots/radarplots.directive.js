@@ -1,3 +1,4 @@
+import 'common/googleFonts';
 import template from './radarplots.html';
 import controller from './radarplots.controller';
 
