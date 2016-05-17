@@ -94,9 +94,13 @@ class ParallelCoordsDirective {
         });
       };
 
-      let svg = this.svg = d3.select("#parallel-coords-div").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+      let svg = this.svg = d3.select("#parallel-coords-div")
+        .append("div")
+        .classed("svg-container", true) //container class to make it responsive
+        .append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+        .classed("svg-content-responsive", true)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 

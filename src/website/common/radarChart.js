@@ -55,13 +55,16 @@ export default function RadarChart(id, data, options) {
     /////////////////////////////////////////////////////////
 
     //Remove whatever chart with the same id/class was present before
-    d3.select(id).select("svg").remove();
+    d3.select(id).select("div").remove();
 
     //Initiate the radar chart SVG
-    let svg = d3.select(id).append("svg")
-        .attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
-        .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
-        .attr("class", "radar"+id);
+    let svg = d3.select(id)
+        .append("div")
+        .classed("svg-container", true) //container class to make it responsive
+        .append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 " + (cfg.w + cfg.margin.left + cfg.margin.right) + " " + (cfg.h + cfg.margin.top + cfg.margin.bottom))
+        .classed("svg-content-responsive", true);
 
     //Append a g element
     let g = svg.append("g")
