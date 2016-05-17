@@ -2,11 +2,11 @@
 module.exports = {
   scripts: {
     // add every bootstrap script you need
-    "transition": false,
+    "transition": true,
     "alert": false,
     "button": false,
     "carousel": false,
-    "collapse": false,
+    "collapse": true,
     "dropdown": true,
     "modal": false,
     "tooltip": false,
@@ -30,7 +30,7 @@ module.exports = {
     "forms": true,
     "buttons": true,
 
-    "component-animations": false,
+    "component-animations": true,
     "glyphicons": false,
     "dropdowns": true,
     "button-groups": true,
