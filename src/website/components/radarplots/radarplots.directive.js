@@ -1,4 +1,4 @@
-import 'common/googleFonts';
+
 import template from './radarplots.html';
 import controller from './radarplots.controller';
 
@@ -32,9 +32,9 @@ class RadarplotsDirective {
                                                 (this.scope.vm.dataStats[k].max - this.scope.vm.dataStats[k].min)}));
       return ret;
     });
-    var margin = {top: 100, right: 100, bottom: 100, left: 100},
-        width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-        height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 100);
+    var margin = {top: 50, right: 10, bottom: 0, left: 10},
+        width = 1100,
+        height = 400;
 
     var radarChartOptions = {
       w: width,
