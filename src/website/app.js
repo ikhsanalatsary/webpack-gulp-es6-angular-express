@@ -4,8 +4,9 @@ import './app.css';
 
 import AppDirective from './app.directive';
 import components from './components/components';
+import services from './services/services';
 
-const app = registerAngularModule('app', [components.module.name])
+const app = registerAngularModule('app', [components.module.name, services.name])
               .controller('app', function($scope) {
                 'ngInject';
                 $scope.components = components.componentsList;
