@@ -1,4 +1,4 @@
-let appModule = require('./app');
+import appModule from './app';
 
 if (__PROD__) {
   appModule.config(($compileProvider, $httpProvider) => {

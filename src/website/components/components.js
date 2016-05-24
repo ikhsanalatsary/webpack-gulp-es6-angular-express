@@ -13,7 +13,7 @@ var moduleNames = _.map(moduleDescriptionContext.keys(), (k, i) => {
   return k.substr(pos+1, pos2-pos-1);
 });
 
-const components = requireAll(moduleDescriptionContext);
+const components = _.map(requireAll(moduleDescriptionContext), m => m.default);
 
 const componentsModule = registerAngularModule('app.components', [uiRouter, ocLazyLoad])
   .config(($stateProvider, $urlRouterProvider) => {
@@ -32,7 +32,7 @@ const componentsModule = registerAngularModule('app.components', [uiRouter, ocLa
               return $q((resolve) => {
                 var load = require('bundle?lazy!./'+moduleNames[i]+'/index');
                 load(function(module) {
-                  resolve($ocLazyLoad.load({name: module.name}));
+                  resolve($ocLazyLoad.load({name: module.default.name}));
                 });
               });
             }

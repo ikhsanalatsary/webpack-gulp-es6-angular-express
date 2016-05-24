@@ -19,7 +19,7 @@ class CarsDataset {
       for (let i = 0 ; i < nbCars ; ++i) {
         requests.push(this.$http.get('datasets/cars/' + ((Math.random() * totalNbCars)|0)));
       }
-      let numericProps = _.keys(_.pick(response.data.propertiesTypes, (v, k) => v === 'number'));
+      let numericProps = _.keys(_.pickBy(response.data.propertiesTypes, (v, k) => v === 'number'));
       return this.$q.all(requests).then((values) => {
         return {dataStats: response.data.numericalPropertiesStats,
                 data: _.map(values, v => _.pick(v.data, numericProps))};

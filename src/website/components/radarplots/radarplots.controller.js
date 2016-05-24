@@ -1,6 +1,7 @@
 class RadarplotsController {
-  /*@ngInject*/
+  
   constructor($scope, carsDatasetSrv) {
+    'ngInject';
     this.name = 'radarplots';
     this.$scope = $scope;
     this.carsDatasetSrv = carsDatasetSrv;

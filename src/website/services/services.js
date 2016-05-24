@@ -1,5 +1,3 @@
-import registerAngularModule from 'registerAngularModule';
-
 const servicesModule = registerAngularModule('app.services', []);
 
 function requireAll(requireContext) {
@@ -11,7 +9,7 @@ var servicesContext = require.context("./", true, /^.*\/index\.js$/);
 var services = requireAll(servicesContext);
 
 _.each(services, service => {
-  servicesModule.service(service.serviceName, service.serviceClass);
+  servicesModule.service(service.default.serviceName, service.default.serviceClass);
 });
 
 export default servicesModule;

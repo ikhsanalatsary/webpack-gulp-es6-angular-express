@@ -118,7 +118,7 @@ module.exports = {
       '$': 'jquery',
       'jQuery': 'jquery',
       '_': 'lodash',
-      'registerAngularModule': 'registerAngularModule'
+      'registerAngularModule': 'exports?registerAngularModule!registerAngularModule'
     }),
     // Automatically generate the index.html file including all webpack generated assets
     new HtmlWebpackPlugin({

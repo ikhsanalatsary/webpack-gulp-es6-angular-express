@@ -18,6 +18,15 @@ var DeepMerge = require('deep-merge');
 var colors = require('colors');
 var spawn = require('child_process').spawn;
 var del = require('del');
+var execSync = require('child_process').execSync;
+var npmVersion = parseFloat(require('npm').version);
+
+// as we use a forked version of ng-annotate (from https://github.com/raphael-boucher/ng-annotate) in order to have es6 support, we have to build it first
+if (npmVersion >= 3.3) {
+  execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --only=dev && cd build && ./build.sh');
+} else {
+  execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --dev && cd build && ./build.sh');
+}
 
 // Modules required to create a progress bar adding some feedback
 // to each compilation performed by webpack
@@ -33,7 +42,6 @@ if (!appConfig.production) {
   // webpack-dev-server for hot reloading of the web application when its source files
   // changed
   var WebpackDevServer = require('webpack-dev-server');
-
 }
 
 // Utility functions to merge an object into another

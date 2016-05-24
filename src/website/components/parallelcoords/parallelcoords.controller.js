@@ -1,6 +1,7 @@
 class ParallelcoordsController {
-  /*@ngInject*/
+
   constructor($scope, carsDatasetSrv) {
+    'ngInject';
     this.name = 'parallelcoords';
     this.$scope = $scope;
     this.carsDatasetSrv = carsDatasetSrv;
