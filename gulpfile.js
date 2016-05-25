@@ -23,7 +23,7 @@ var spawn = require('child_process').spawn;
 var del = require('del');
 var execSync = require('child_process').execSync;
 var fs = require('fs');
-var npmVersion = parseFloat(require('npm').version);
+var npmVersion = parseFloat(require('shelljs').exec('npm --version', {silent:true}).stdout);
 
 try {
   fs.statSync('./node_modules/ng-annotate-loader/node_modules/ng-annotate/build/es5/ng-annotate.js');
