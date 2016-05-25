@@ -16,8 +16,15 @@ class CarsDataset {
     return this.$http.get('datasets/cars/stats').then(response => {
       let totalNbCars = response.data.count;
       let requests = [];
+      let fetchedIds = [];
       for (let i = 0 ; i < nbCars ; ++i) {
-        requests.push(this.$http.get('datasets/cars/' + ((Math.random() * totalNbCars)|0)));
+        let id = ((Math.random() * totalNbCars)|0);
+        if (!_.includes(fetchedIds, id)) {
+          requests.push(this.$http.get('datasets/cars/' + id));
+          fetchedIds.push(id);
+        } else {
+          --i;
+        }
       }
       let numericProps = _.keys(_.pickBy(response.data.propertiesTypes, (v, k) => v === 'number'));
       return this.$q.all(requests).then((values) => {
