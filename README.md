@@ -19,8 +19,8 @@ This is still a work in progress and is likely to evolve over time.
 Below is a list of features offered by that workflow:
 
   * Use [gulp](http://gulpjs.com/) as a task runner for its simplicity of use
-  * Use [webpack](https://github.com/webpack/webpack) to bundle the backend and frontend parts of the application
-  * Example of the [code splitting feature](https://webpack.github.io/docs/code-splitting.html) offered by [webpack](https://github.com/webpack/webpack)
+  * Use [webpack](https://webpack.github.io/) to bundle the backend and frontend parts of the application
+  * Example of the [code splitting feature](https://webpack.github.io/docs/code-splitting.html) offered by [webpack](https://webpack.github.io/)
   * Automatically apply [jshint](http://jshint.com/) on all source files when building the application
   * [ECMAScript 6](http://es6-features.org/) (aka ES6 or ES2015) support thanks to [babel](https://babeljs.io/)
   * Development server for the frontend application with hot reloading (through [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html))
@@ -32,7 +32,13 @@ Below is a list of features offered by that workflow:
   and assets minification (through [UglifyJs](http://lisperator.net/uglifyjs/)).
   * Experiment [ES6](http://es6-features.org/) syntax with [angular](https://angularjs.org/) 1.x
   (in particular use classes for all [angular](https://angularjs.org/) components)
+  * Use [webpack dynamic requires](https://webpack.github.io/docs/context.html) to ease the integration of new [angular](https://angularjs.org/) components
+  * Dynamic loading of [angular](https://angularjs.org/) modules trough the use of [angular-ui-router](https://github.com/angular-ui/ui-router), [oclazyload](https://oclazyload.readme.io/) and [webpack bundle-loader](https://github.com/webpack/bundle-loader) : load web application components only when their use is requested (ideal when targetting mobile devices).
+  * Unit tests for the frontend part of the application through the use of [Karma](https://karma-runner.github.io/0.13/index.html) and [Jasmine](http://jasmine.github.io/). Those tests are also bundled by [webpack](https://webpack.github.io/).
+  * Code coverage for the unit tests thanks to [babel-istanbul](https://github.com/jmcriffey/babel-istanbul)
   * Optional use of [js-beautify](https://github.com/beautify-web/js-beautify) to prettify javascript source files
+
+A port of that workflow, offering the same features, to the incoming [webpack 2](https://github.com/webpack/webpack) can also be found in the `webpack2-babel6` branch of that repository.
 
 ## Installation
 
@@ -41,6 +47,8 @@ To use it, just clone this repository and install the [npm](https://www.npmjs.co
 ```shell
 $ git clone https://github.com/anlambert/webpack-gulp-es6-angular-express
 $ cd webpack-gulp-es6-angular-express
+# Gulp needs to be installed globally
+$ npm install -g gulp
 $ npm install
 ```
 
@@ -54,22 +62,22 @@ All scripts are run with `npm run [script]`, for example: `npm run start-dev`.
 * `start-dev` - build and start the application in development mode. No assets will be generated to the build/website folder
   as we use the [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html) in order to get hot reloading on source files changes.
   Open up http://localhost:4000/ in your browser to see it in action.
+* `test-frontend` - execute the unit tests in Google Chrome for the frontend part of the application by starting a [Karma](https://karma-runner.github.io/0.13/index.html) server. Code coverage is also computed when running that script, open `coverage/html/index.html` to look at the report.
 * `beautify` - beautify source code files (javascript only for the moment)
 
 See what each script does by looking at the `scripts` section in [package.json](./package.json).
 
 ## References
 
-Some useful references and repositories about working with [webpack](https://github.com/webpack/webpack) I found by digging on the subject:
+Some useful references and repositories about working with [angular](https://angularjs.org/) and [webpack](https://github.com/webpack/webpack) I found by digging on the subject:
 
   * [Backend Apps with Webpack](http://jlongster.com/Backend-Apps-with-Webpack--Part-I)
   * [Angular Webpack Cookbook](http://dmachat.github.io/angular-webpack-cookbook/)
   * [Single Page Modules with Webpack](http://dontkry.com/posts/code/single-page-modules-with-webpack.html)
   * [Long-term caching of static assets with Webpack](https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.3ojwvxkul)
-  * [gulp-webpack-starter](https://github.com/esayemm/gulp-webpack-starter)
-  * [angular-webpack-es6-babel](https://github.com/chyld/angular-webpack-es6-babel)
-  * [gulp-angular-webpack-seed](https://github.com/tthew/gulp-angular-webpack-seed)
-  * [angular-webpack-workflow](https://github.com/Foxandxss/angular-webpack-workflow)
+  * [Awesome AngularJS](https://github.com/gianarb/awesome-angularjs)
+  * [Simple example on how to use Webpack, Angular and ocLazyLoad](https://github.com/voidberg/webpack-angularjs-lazyload)
+  * [Lazy loading avec WebPack & AngularJS](http://blog.xebia.fr/2016/03/08/lazy-loading-avec-webpack-angularjs/) (in french)
 
 For those interested by working with [angular](https://angularjs.org/) and [ES6](http://es6-features.org/), you can also check those ones :
 
@@ -77,8 +85,10 @@ For those interested by working with [angular](https://angularjs.org/) and [ES6]
   * [An experiment in using ES6 features with AngularJS 1.x ](https://github.com/michaelbromley/angular-es6)
   * [Starter for Angular + ES6 + (Webpack or JSPM) by Angular-Class](https://github.com/angular-class/NG6-starter)
 
+Regarding the integration of [webpack](https://github.com/webpack/webpack), [Karma](https://karma-runner.github.io/0.13/index.html) and [Jasmine](http://jasmine.github.io/) to run the unit tests but also their code coverage, I took my inspiration from the [ES6 Karma Jasmine Webpack Boilerplate](https://github.com/zyml/es6-karma-jasmine-webpack-boilerplate) project from [Melvin Lee](https://github.com/zyml).
+
 I also strongly recommend to watch that brilliant talk on [webpack](https://github.com/webpack/webpack) by Alexandrine Boissiere : [Efficient Static Assets Pipeline with Webpack](https://www.youtube.com/watch?v=w1dAb_Umt8o).
-  
+
 ## License
 
 The MIT License (MIT)
