@@ -9,23 +9,31 @@ if (argv['NODE_ENV'] != null) {
 
 // determine if we are in production mode by checking the value of the NODE_ENV environment variable
 var appConfig = require('./config');
+var webpackConfigs = require('./webpack-configs');
+
+var frontendConfig = webpackConfigs.frontendConfig;
+var backendConfig = webpackConfigs.backendConfig;
 
 // require needed node modules
 var gulp = require('gulp');
 var webpack = require('webpack');
 var path = require('path');
-var DeepMerge = require('deep-merge');
 var colors = require('colors');
 var spawn = require('child_process').spawn;
 var del = require('del');
 var execSync = require('child_process').execSync;
+var fs = require('fs');
 var npmVersion = parseFloat(require('npm').version);
 
-// as we use a forked version of ng-annotate (from https://github.com/raphael-boucher/ng-annotate) in order to have es6 support, we have to build it first
-if (npmVersion >= 3.3) {
-  execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --only=dev && cd build && ./build.sh');
-} else {
-  execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --dev && cd build && ./build.sh');
+try {
+  fs.statSync('./node_modules/ng-annotate-loader/node_modules/ng-annotate/build/es5/ng-annotate.js');
+} catch (e) {
+  // as we use a forked version of ng-annotate (from https://github.com/raphael-boucher/ng-annotate) in order to have es6 support, we have to build it first
+  if (npmVersion >= 3.3) {
+    execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --only=dev && cd build && ./build.sh');
+  } else {
+    execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --dev && cd build && ./build.sh');
+  }
 }
 
 // Modules required to create a progress bar adding some feedback
@@ -42,27 +50,9 @@ if (!appConfig.production) {
   // webpack-dev-server for hot reloading of the web application when its source files
   // changed
   var WebpackDevServer = require('webpack-dev-server');
+
+  var KarmaServer = require('karma').Server;
 }
-
-// Utility functions to merge an object into another
-var deepmerge = DeepMerge(function(target, source, key) {
-  if (target instanceof Array) {
-    return [].concat(target, source);
-  }
-  return source;
-});
-
-var defaultConfig = require('./webpack.config.common');
-
-var config = function(overrides) {
-  return deepmerge(defaultConfig, overrides || {});
-};
-
-// Webpack configuration for the frontend Web application
-var frontendConfig = config(require('./webpack.config.frontend'));
-
-// Webpack configuration for the backend server application
-var backendConfig = config(require('./webpack.config.backend'));
 
 var buildError = false;
 
@@ -216,6 +206,15 @@ gulp.task('run', ['build'], function(done) {
     done();
   });
 
+});
+
+
+// Run unit tests once and exit
+gulp.task('test-frontend', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.config.frontend.js',
+    singleRun: true
+  }, done).start();
 });
 
 // Ensure that all child processes are killed when hitting Ctrl+C in the console
