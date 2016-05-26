@@ -2,7 +2,7 @@ import template from './parallelcoords.html';
 import controller from './parallelcoords.controller';
 
 import './parallelcoords.css';
-import * as curves from 'common/curves';
+import {computeCatmullRomPoints} from 'common/curves';
 
 class ParallelCoordsDirective {
 
@@ -75,7 +75,7 @@ class ParallelCoordsDirective {
       };
 
       let curvePath = (d) => {
-        return line(curves.computeCatmullRomPoints(dimensions.map(p => [position(p), y[p](d[p])])));
+        return line(computeCatmullRomPoints(dimensions.map(p => [position(p), y[p](d[p])])));
       };
 
 

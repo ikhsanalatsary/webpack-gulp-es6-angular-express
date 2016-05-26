@@ -3,8 +3,22 @@
 
 var argv = require('minimist')(process.argv.slice(2));
 
+// we use BABEL_ENV for modifying the babel presets (see .babelrc file)
+// in order to enable / disable the tree shaking feature of webpack 2.x
+// tree shaking = dead code elimination from the output bundles
+// The modules must be written in ES6 style (import/export keyword)
+// for that feature to work though.
+
+// set default babel env to development (no webpack 2.x tree shaking
+// as it is not need in dev mode and makes babel-istanbul fails)
+process.env.BABEL_ENV = 'development';
+
 if (argv['NODE_ENV'] != null) {
   process.env.NODE_ENV = argv['NODE_ENV'];
+  // set babel env to production in order for webpack 2.x to perform tree shaking
+  if (argv['NODE_ENV'] == 'production') {
+    process.env.BABEL_ENV = 'production';
+  }
 }
 
 // determine if we are in production mode by checking the value of the NODE_ENV environment variable
