@@ -8,7 +8,7 @@
       "dependencies": {
         "ng-annotate": {
           "version": "1.2.1",
-          "from": "git://github.com/raphael-boucher/ng-annotate.git"
+          "from": "git://github.com/anlambert/ng-annotate.git"
         }
       }
     }

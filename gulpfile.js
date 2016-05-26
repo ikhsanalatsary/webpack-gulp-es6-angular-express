@@ -23,18 +23,6 @@ var spawn = require('child_process').spawn;
 var del = require('del');
 var execSync = require('child_process').execSync;
 var fs = require('fs');
-var npmVersion = parseFloat(require('shelljs').exec('npm --version', {silent:true}).stdout);
-
-try {
-  fs.statSync('./node_modules/ng-annotate-loader/node_modules/ng-annotate/build/es5/ng-annotate.js');
-} catch (e) {
-  // as we use a forked version of ng-annotate (from https://github.com/raphael-boucher/ng-annotate) in order to have es6 support, we have to build it first
-  if (npmVersion >= 3.3) {
-    execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --only=dev && cd build && ./build.sh');
-  } else {
-    execSync('cd ./node_modules/ng-annotate-loader/node_modules/ng-annotate/ && npm install && npm install --dev && cd build && ./build.sh');
-  }
-}
 
 // Modules required to create a progress bar adding some feedback
 // to each compilation performed by webpack
