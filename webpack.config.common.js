@@ -70,7 +70,7 @@ module.exports = {
       // to avoid common errors and embrace best development practices
       {
         test: /\.js$/,
-        exclude: /(node_modules|__tests__)/,
+        exclude: /(node_modules|__tests__|tests_utils)/,
         loader: 'jshint'
       }
     ],
@@ -81,7 +81,7 @@ module.exports = {
       // (explicit annotations are needed though with es6 syntax)
       {
         test: /\.js$/,
-        exclude: /(node_modules|__tests__)/,
+        exclude: /node_modules/,
         loaders: ['ng-annotate?es6=true', 'babel']
       },
       // use json loader to automatically parse JSON files content when importing them
