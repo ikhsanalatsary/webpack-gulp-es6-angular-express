@@ -34,27 +34,18 @@ if (!appConfig.production) {
   // changed
   var WebpackDevServer = require('webpack-dev-server');
 
+  // karma server for executing unit tests
+  var KarmaServer = require('karma').Server;
+
 }
 
-// Utility functions to merge an object into another
-var deepmerge = DeepMerge(function(target, source, key) {
-  if (target instanceof Array) {
-    return [].concat(target, source);
-  }
-  return source;
-});
-
-var defaultConfig = require('./webpack.config.common');
-
-var config = function(overrides) {
-  return deepmerge(defaultConfig, overrides || {});
-};
+var webpackConfigs = require('./webpack-configs');
 
 // Webpack configuration for the frontend Web application
-var frontendConfig = config(require('./webpack.config.frontend'));
+var frontendConfig = webpackConfigs.frontendConfig;
 
 // Webpack configuration for the backend server application
-var backendConfig = config(require('./webpack.config.backend'));
+var backendConfig = webpackConfigs.backendConfig;
 
 var buildError = false;
 
@@ -208,6 +199,14 @@ gulp.task('run', ['build'], function(done) {
     done();
   });
 
+});
+
+// Run unit tests once and exit
+gulp.task('test-frontend', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.config.frontend.js',
+    singleRun: true
+  }, done).start();
 });
 
 // Ensure that all child processes are killed when hitting Ctrl+C in the console

@@ -23,6 +23,50 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // require CSS autoprefixer for PostCSS
 var autoprefixer = require('autoprefixer');
 
+var webpackPlugins =
+[
+  // Automatically loaded modules available in all source files of the application
+  // (no need to explicitely import them)
+  new webpack.ProvidePlugin({
+    '$': 'jquery',
+    'jQuery': 'jquery',
+    '_': 'lodash',
+    'registerAngularModule': 'registerAngularModule'
+  }),
+];
+
+if (!appConfig.test) {
+  webpackPlugins = webpackPlugins.concat([
+    // Identifies common modules and put them into a commons chunk (needed to generate the vendors bundle)
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendors',
+      minChunks: Infinity
+    }),
+
+    // Automatically generate the index.html file including all webpack generated assets
+    new HtmlWebpackPlugin({
+      title: 'Webpack Angular Test',
+      template: 'src/website/index.ejs'
+    })
+  ]);
+}
+
+if (appConfig.watch) {
+  webpackPlugins = webpackPlugins.concat([
+    // Need to use that plugin in development mode to get hot reloading on source files changes
+    new webpack.HotModuleReplacementPlugin({
+      quiet: true
+    })
+  ]);
+}
+
+if (!appConfig.watch && !appConfig.test) {
+  webpackPlugins = webpackPlugins.concat([
+    // Extract stylesheets to separate CSS file in production mode
+    new ExtractTextPlugin(appConfig.production ? '[name].[contenthash].css' : '[name].css')
+  ]);
+}
+
 module.exports = {
   // Cache generated modules and chunks to improve performance for multiple incremental builds.
   cache: true,
@@ -45,10 +89,9 @@ module.exports = {
     // It is a good practice to do so as the code it contains is unlikely to change during the application lifetime.
     // This will allow you to do updates to your application, without requiring the users to download the vendors bundle again
     // See http://dmachat.github.io/angular-webpack-cookbook/Split-app-and-vendors.html for more details
-    vendors: ['angular', 'angular-ui-router',
+    vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash',
               !appConfig.watch ? './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
-              './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.js', 'jquery',
-              'lodash'
+                                 './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.js'
     ],
     // The frontend application entry point (bootstrapApp.js)
     // In development mode, we also add webpack-dev-server specific entry points
@@ -79,7 +122,7 @@ module.exports = {
       // In production mode, extract all the stylesheets to a separate css file (improve loading performances of the application)
       {
         test: /\.css$/,
-        loader: !appConfig.watch ? ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') : 'style!css!postcss'
+        loader: (!appConfig.watch && !appConfig.test) ? ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') : 'style!css!postcss'
       },
 
       // Loaders for the font files (bootstrap, font-awesome, ...)
@@ -100,6 +143,10 @@ module.exports = {
     // Disable parsing of the minified angular dist as it is not needed and it speeds up the webpack build
     noParse: [pathToAngular]
   },
+  // to avoid errors when bundling unit tests
+  node: {
+    fs: "empty"
+  },
   // CSS preprocessor configuration (PostCSS)
   postcss: [
     // use autoprefixer feature (enable to write your CSS rules without vendor prefixes)
@@ -107,36 +154,7 @@ module.exports = {
     autoprefixer()
   ],
   // Webpack plugins used for the frontend
-  plugins: [
-    // Identifies common modules and put them into a commons chunk (needed to generate the vendors bundle)
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      minChunks: Infinity
-    }),
-    // Automatically loaded modules available in all source files of the application
-    // (no need to explicitely import them)
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery',
-      '_': 'lodash',
-      'registerAngularModule': 'registerAngularModule'
-    }),
-    // Automatically generate the index.html file including all webpack generated assets
-    new HtmlWebpackPlugin({
-      title: 'Webpack Angular Test',
-      template: 'src/website/index.ejs'
-    })
-  ].concat(!appConfig.watch ?
-  [
-    // Extract stylesheets to separate CSS file in production mode
-    new ExtractTextPlugin(appConfig.production ? '[name].[contenthash].css' : '[name].css')
-  ] :
-  [
-    // Need to use that plugin in development mode to get hot reloading on source files changes
-    new webpack.HotModuleReplacementPlugin({
-      quiet: true
-    })
-  ]),
+  plugins: webpackPlugins,
 
   // Options for jshint
   jshint: {
