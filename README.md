@@ -38,7 +38,8 @@ Below is a list of features offered by that workflow:
   * Code coverage for the unit tests thanks to [babel-istanbul](https://github.com/jmcriffey/babel-istanbul)
   * Optional use of [js-beautify](https://github.com/beautify-web/js-beautify) to prettify javascript source files
 
-A port of that workflow, offering the same features, to the incoming [webpack 2](https://github.com/webpack/webpack) can also be found in the `webpack2-babel6` branch of that repository.
+A port of that workflow, offering the same features, to the incoming [webpack 2](https://github.com/webpack/webpack) can also be found in the [webpack2-babel6](https://github.com/anlambert/webpack-gulp-es6-angular-express/tree/webpack2-babel6) branch of that repository.
+On the contrary of webpack 1.x, it allows to perform [tree shaking](https://medium.com/modus-create-front-end-development/webpack-2-tree-shaking-configuration-9f1de90f3233#.8o21apggi) in production mode to further reduce the size of output bundles (but you need to write your modules with ES6 syntax for that feature to work).
 
 ## Installation
 
@@ -62,7 +63,7 @@ All scripts are run with `npm run [script]`, for example: `npm run start-dev`.
 * `start-dev` - build and start the application in development mode. No assets will be generated to the build/website folder
   as we use the [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html) in order to get hot reloading on source files changes.
   Open up http://localhost:4000/ in your browser to see it in action.
-* `test-frontend` - execute the unit tests in Google Chrome for the frontend part of the application by starting a [Karma](https://karma-runner.github.io/0.13/index.html) server. Code coverage is also computed when running that script, open `coverage/html/index.html` to look at the report.
+* `test-frontend` - execute the unit tests in [PhantomJS](http://phantomjs.org/) for the frontend part of the application by starting a [Karma](https://karma-runner.github.io/0.13/index.html) server. Code coverage is also computed when running that script, open `coverage/html/index.html` to look at the report.
 * `beautify` - beautify source code files (javascript only for the moment)
 
 See what each script does by looking at the `scripts` section in [package.json](./package.json).
