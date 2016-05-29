@@ -121,6 +121,10 @@ module.exports = {
         test: /\.css$/,
         loader: (!appConfig.watch && !appConfig.test) ? ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader') : 'style!css!postcss'
       },
+      {
+        test: /\.less$/,
+        loader: (!appConfig.watch && !appConfig.test) ? ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!less-loader') : 'style!css!postcss!less'
+      },
 
       // Loaders for the font files (bootstrap, font-awesome, ...)
       {
