@@ -87,8 +87,8 @@ module.exports = {
     // This will allow you to do updates to your application, without requiring the users to download the vendors bundle again
     // See http://dmachat.github.io/angular-webpack-cookbook/Split-app-and-vendors.html for more details
     vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash',
-              !appConfig.watch ? './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
-                                 './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.js'
+              !appConfig.watch ? 'bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
+                                 'bootstrap-webpack!./src/website/bootstrap.config.js'
     ],
     // The frontend application entry point (bootstrapApp.js)
     // In development mode, we also add webpack-dev-server specific entry points

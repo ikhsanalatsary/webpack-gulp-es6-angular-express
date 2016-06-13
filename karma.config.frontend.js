@@ -21,7 +21,7 @@ frontendConfig.module.preLoaders = [
   // process all project files (except the tests ones) with babel-istanbul for code coverage
   {
     test: /\.js?$/,
-    exclude: /(node_modules|bower_components|__tests__|tests_utils)/,
+    exclude: /(node_modules|bower_components|__tests__|tests_utils|bootstrap)/,
     loader: 'babel-istanbul',
     query: {
       cacheDirectory: true

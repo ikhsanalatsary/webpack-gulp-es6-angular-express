@@ -70,7 +70,7 @@ module.exports = {
       // to avoid common errors and embrace best development practices
       {
         test: /\.js$/,
-        exclude: /(node_modules|__tests__|tests_utils)/,
+        exclude: /(node_modules|__tests__|tests_utils|bootstrap)/,
         loader: 'jshint'
       }
     ],
