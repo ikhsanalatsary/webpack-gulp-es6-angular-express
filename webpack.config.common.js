@@ -71,7 +71,7 @@ module.exports = {
       // to avoid common errors and embrace best development practices
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bootstrap)/,
         loader: 'jshint'
       }
     ],

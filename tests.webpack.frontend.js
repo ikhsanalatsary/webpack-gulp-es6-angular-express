@@ -7,7 +7,7 @@ import angularmocks from 'angular-mocks';
 import registerAngularModule from 'registerAngularModule';
 import jquery from 'jquery';
 import lodash from 'lodash';
-import './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.js';
+import 'bootstrap-webpack!./src/website/bootstrap.config.js';
 
 // Import unit tests files (found in __tests__ folders and suffixed by -test.js)
 var testsContext = require.context('./src/website', true, /-test\.js$/);

@@ -6,7 +6,7 @@ var webpack = require('webpack');
 var appConfig = require('./config');
 
 // resolve path to minified angular dist
-var pathToAngular = path.resolve(__dirname, 'node_modules/angular/angular.min.js');
+var pathToAngular = path.resolve(__dirname, 'node_modules/angular/angular.js');
 
 // extract css in non watch mode (don't extract in watch mode as we want hot reloading of css)
 if (!appConfig.watch) {
@@ -90,8 +90,8 @@ module.exports = {
     // This will allow you to do updates to your application, without requiring the users to download the vendors bundle again
     // See http://dmachat.github.io/angular-webpack-cookbook/Split-app-and-vendors.html for more details
     vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash',
-              !appConfig.watch ? './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
-                                 './src/node_modules/bootstrap-webpack!./src/website/bootstrap.config.js'
+              !appConfig.watch ? 'bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
+                                 'bootstrap-webpack!./src/website/bootstrap.config.js'
     ],
     // The frontend application entry point (bootstrapApp.js)
     // In development mode, we also add webpack-dev-server specific entry points
