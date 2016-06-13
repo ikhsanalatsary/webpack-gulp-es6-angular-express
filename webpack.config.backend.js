@@ -21,14 +21,19 @@ fs.readdirSync('node_modules')
 module.exports = {
   // Server app entry point
   entry: [
-    './src/server/main.js'
+    !appConfig.test ? './src/server/main.js' : './tests.webpack.backend.js'
   ],
   // Inform webpack that we are targetting node and not the browser
   target: 'node',
   // Backend bundle output configuration
-  output: {
+  output: !appConfig.test ?
+  {
     path: path.join(__dirname, 'build/server'),
     filename: 'backend.js'
+  } :
+  {
+    path: path.join(__dirname, 'build/server-tests'),
+    filename: 'backend-tests.js'
   },
   // do not freeze __dirname and __filename when bundling with webpack
   node: {
@@ -39,7 +44,7 @@ module.exports = {
   externals: nodeModules,
   // Store/Load compiler state from/to a json file. This will result in persistent ids of modules and chunks.
   // This is required, when using Hot Code Replacement between multiple calls to the compiler.
-  recordsPath: path.join(__dirname, 'build/server/_records'),
+  recordsPath: path.join(__dirname, !appConfig.test ? 'build/server/_records' : 'build/server-tests/_records'),
   // Webpack plugins used for the backend
   plugins: [
     // Provide lodash as global

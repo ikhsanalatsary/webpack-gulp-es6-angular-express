@@ -9,8 +9,6 @@ let app = express();
 
 app.use(compression());
 
-let server = http.createServer(app);
-
 app.use('/datasets', datasets);
 
 // In development mode, we create a proxy server to forward all
@@ -29,8 +27,8 @@ if (config.watch) {
     console.log('Could not connect to proxy, please try again...');
   });
 
-} else {
+} else if (!config.test) {
   app.use(express.static(path.join(__dirname, '../../build/website')));
 }
 
-export default server;
+export default app;

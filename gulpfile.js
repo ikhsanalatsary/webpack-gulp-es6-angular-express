@@ -40,6 +40,8 @@ if (!appConfig.production) {
   var WebpackDevServer = require('webpack-dev-server');
 
   var KarmaServer = require('karma').Server;
+
+  var gulpMocha = require('gulp-mocha');
 }
 
 var buildError = false;
@@ -84,6 +86,8 @@ function webpackProgress(compiler, headingMessage) {
   }));
 }
 
+// ===================================================================================
+
 // Gulp task to build the frontend bundle
 gulp.task('frontend-build', function(done) {
   // First, clean the previous frontend build
@@ -125,6 +129,8 @@ gulp.task('frontend-watch', function(done) {
 
 });
 
+// ===================================================================================
+
 // Gulp task to build the backend bundle
 gulp.task('backend-build', ['frontend-build'], function(done) {
   // First, clean the previous backend build
@@ -151,6 +157,8 @@ gulp.task('backend-watch', ['frontend-watch'], function(done) {
     nodemon.restart();
   });
 });
+
+// ===================================================================================
 
 // Gulp task to build the frontend and backend bundles
 gulp.task('build', ['backend-build']);
@@ -196,8 +204,9 @@ gulp.task('run', ['build'], function(done) {
 
 });
 
+// ===================================================================================
 
-// Run unit tests once and exit
+// Gulp task that run the frontend unit tests through karma then exit
 gulp.task('test-frontend', function (done) {
   new KarmaServer({
     configFile: __dirname + '/karma.config.frontend.js',
@@ -205,9 +214,25 @@ gulp.task('test-frontend', function (done) {
   }, done).start();
 });
 
-// Ensure that all child processes are killed when hitting Ctrl+C in the console
-process.once('SIGINT', function() {
-  process.exit();
+// Gulp task to build the backend unit tests bundle
+gulp.task('test-backend-build', function(done) {
+  // First, clean the previous backend uni tests build
+  del(['build/server-tests/**/*']);
+  var compiler = webpack(backendConfig);
+  webpackProgress(compiler, 'Compiling backend tests');
+  compiler.run(onBuild(done));
+});
+
+// Gulp task that run the backend unit tests through mocha then exit
+gulp.task('test-backend', ['test-backend-build'], function() {
+  gulp.src('build/server-tests/backend-tests.js', {read: false})
+      .pipe(gulpMocha({reporter: 'nyan'}))
+      .once('error', function() {
+        process.exit(1);
+      })
+      .once('end', function() {
+        process.exit();
+      });
 });
 
 // ===================================================================================
@@ -231,4 +256,11 @@ gulp.task('beautify-js', function() {
       mode: 'VERIFY_AND_WRITE'
     }))
     .pipe(gulp.dest('./'))
+});
+
+// ===================================================================================
+
+// Ensure that all child processes are killed when hitting Ctrl+C in the console
+process.once('SIGINT', function() {
+  process.exit();
 });
