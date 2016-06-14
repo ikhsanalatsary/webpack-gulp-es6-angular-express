@@ -211,7 +211,10 @@ gulp.task('test-frontend', function (done) {
   new KarmaServer({
     configFile: __dirname + '/karma.config.frontend.js',
     singleRun: true
-  }, done).start();
+  }, function() {
+    done();
+    process.exit();
+  }).start();
 });
 
 // Gulp task to build the backend unit tests bundle
