@@ -33,6 +33,9 @@ module.exports = function (config) {
   config.set({
     // tests will be executed in PhantomJS
     browsers: ['PhantomJS'],
+    client : {
+      captureConsole: true
+    },
     // code coverage output configuration : open ./coverage/html/index.html to see the report
     coverageReporter: {
       reporters: [
