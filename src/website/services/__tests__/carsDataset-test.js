@@ -15,16 +15,18 @@ describe('cars dataset services', function () {
     mockCarsDatasetApi(httpBackend);
   }));
 
-  it('should fetch the whole cars dataset', function () {
+  it('should fetch the whole cars dataset', function (done) {
     carsDatasetSrv.getAllCarsData().then(function(cars) {
       expect(cars).toEqual(carsSamples);
+      done();
     });
     httpBackend.flush();
   });
 
-  it('should fetch two random cars data', function () {
+  it('should fetch two random cars data', function (done) {
     carsDatasetSrv.getRandomCarsNumericData(2).then(function(carsData) {
       expect(carsData.data.length).toEqual(2);
+      done();
     });
     httpBackend.flush();
   });
