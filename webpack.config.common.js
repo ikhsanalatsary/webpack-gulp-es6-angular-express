@@ -10,7 +10,9 @@ var webpackPlugins = [
   // define a global __PROD__ variable indicating if the application is
   // executed in production mode or not
   new webpack.DefinePlugin({
-    __PROD__: appConfig.production
+    __PROD__: appConfig.production,
+    __WATCH__: appConfig.watch,
+    __TEST__ : appConfig.test
   }),
   // When there are errors while compiling this plugin skips the emitting phase (and recording phase),
   // so there are no assets emitted that include errors.
@@ -110,6 +112,8 @@ module.exports = {
     // variable added by webpack through the DefinePlugin
     globals: {
       __PROD__: false,
+      __WATCH__: false,
+      __TEST__: false,
       expect: false
     }
   },
