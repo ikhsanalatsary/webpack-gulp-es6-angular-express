@@ -1,5 +1,3 @@
-import appConfig from 'config';
-
 import './app.css';
 
 import AppDirective from './app.directive';
