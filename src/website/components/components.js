@@ -27,7 +27,7 @@ const componentsModule = registerAngularModule('app.components', [uiRouter, ocLa
         .state(c.url, {
           url: '/' + c.url,
           template: c.template,
-          resolve: {
+          resolve: __TEST__ ? {} : {
             loadModule: ($q, $ocLazyLoad) => {
               return $q((resolve) => {
                 var load = require('bundle?lazy!./'+moduleNames[i]+'/index');
