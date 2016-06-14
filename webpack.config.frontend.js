@@ -36,10 +36,17 @@ var webpackPlugins = [
 
 if (!appConfig.test) {
   webpackPlugins = webpackPlugins.concat([
-    // Identifies common modules and put them into a commons chunk (needed to generate the vendors bundle)
+    // Explicitely generates the vendors bundle
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors',
       minChunks: Infinity
+    }),
+    // Identifies common modules between entries and generated chunks and put them into a commons chunk
+    // that will be asynchronously loaded
+    new webpack.optimize.CommonsChunkPlugin({
+      children: true,
+      async: true,
+      minChunks: 2
     }),
     // Automatically generate the index.html file including all webpack generated assets
     new HtmlWebpackPlugin({
@@ -94,7 +101,7 @@ module.exports = {
     // In development mode, we also add webpack-dev-server specific entry points
     app: (!appConfig.watch ? [] : ['webpack/hot/dev-server',
       'webpack-dev-server/client?http://localhost:' + appConfig.ports.devServer
-    ]).concat(['./src/website/bootstrapApp.js']),
+    ]).concat(['./src/website/bootstrapApp.js'])
   },
   // The output configuration of the build process
   output: {

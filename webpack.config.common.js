@@ -20,22 +20,14 @@ var webpackPlugins = [
 ];
 
 // Recommended webpack plugins when building the application for production  :
-if (appConfig.production) {
+if (!appConfig.test) {
   webpackPlugins = webpackPlugins.concat([
     // Assign the module and chunk ids by occurrence count. Ids that are used often get lower (shorter) ids.
     // This make ids predictable, reduces to total file size and is recommended.
     new webpack.optimize.OccurenceOrderPlugin(true),
     // Search for equal or similar files and deduplicate them in the output.
     // This comes with some overhead for the entry chunk, but can reduce file size effectively.
-    new webpack.optimize.DedupePlugin(),
-    // Minimize all JavaScript output of chunks. Loaders are switched into minimizing mode.
-    // You can pass an object containing UglifyJs options.
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      comments: false
-    })
+    new webpack.optimize.DedupePlugin()
   ]);
 }
 
@@ -46,6 +38,19 @@ if (appConfig.test) {
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
     // Ignore the fsevents module when bundling the unit tests to avoid a webpack warning about it
     new webpack.IgnorePlugin(/fsevents/)
+  ]);
+}
+
+if (appConfig.production) {
+  webpackPlugins = webpackPlugins.concat([
+    // Minimize all JavaScript output of chunks. Loaders are switched into minimizing mode.
+    // You can pass an object containing UglifyJs options.
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      comments: false
+    })
   ]);
 }
 
