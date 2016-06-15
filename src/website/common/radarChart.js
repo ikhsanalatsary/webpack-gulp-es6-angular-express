@@ -1,5 +1,7 @@
 import d3 from 'd3';
-import 'd3-tip';
+import d3Tip from 'd3-tip';
+d3.tip = d3Tip;
+import './d3-tip.css';
 
 // taken from http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
 
@@ -10,7 +12,7 @@ import 'd3-tip';
 /////////// Inspired by the code of alangrafu ///////////
 /////////////////////////////////////////////////////////
 
-export default function RadarChart(id, data, options) {
+export default function RadarChart(id, data, labels, options) {
 
   let cfg = {
     w: 600, //Width of the circle
@@ -56,6 +58,13 @@ export default function RadarChart(id, data, options) {
   //Remove whatever chart with the same id/class was present before
   d3.select(id).select("div").remove();
 
+  let tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function(d, i) {
+                return "<span style='color:"+cfg.color(i)+"'>" + d.label + "</span>";
+              });
+
   //Initiate the radar chart SVG
   let svg = d3.select(id)
       .append("div")
@@ -64,6 +73,8 @@ export default function RadarChart(id, data, options) {
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", "0 0 " + (cfg.w + cfg.margin.left + cfg.margin.right) + " " + (cfg.h + cfg.margin.top + cfg.margin.bottom))
       .classed("svg-content-responsive", true);
+
+  svg.call(tip);
 
   //Append a g element
   let g = svg.append("g")
@@ -157,9 +168,11 @@ export default function RadarChart(id, data, options) {
     radarLine.interpolate("cardinal-closed");
   }
 
+  let radarData = _.map(data, function(d, i) {return {label: labels[i], data: d};});
+
   //Create a wrapper for the blobs
   let blobWrapper = g.selectAll(".radarWrapper")
-    .data(data)
+    .data(radarData)
     .enter().append("g")
     .attr("class", "radarWrapper");
 
@@ -167,7 +180,7 @@ export default function RadarChart(id, data, options) {
   blobWrapper
     .append("path")
     .attr("class", "radarArea")
-    .attr("d", function(d,i) { return radarLine(d); })
+    .attr("d", function(d,i) { return radarLine(d.data); })
     .style("fill", function(d,i) { return cfg.color(i); })
     .style("fill-opacity", cfg.opacityArea)
     .on('mouseover', function (d,i){
@@ -179,18 +192,20 @@ export default function RadarChart(id, data, options) {
       d3.select(this)
         .transition().duration(200)
         .style("fill-opacity", 0.7);
+      tip.show(d, i);
     })
     .on('mouseout', function(){
       //Bring back all blobs
       d3.selectAll(".radarArea")
         .transition().duration(200)
         .style("fill-opacity", cfg.opacityArea);
+      tip.hide();
     });
 
   //Create the outlines
   blobWrapper.append("path")
     .attr("class", "radarStroke")
-    .attr("d", function(d,i) { return radarLine(d); })
+    .attr("d", function(d,i) { return radarLine(d.data); })
     .style("stroke-width", cfg.strokeWidth + "px")
     .style("stroke", function(d,i) { return cfg.color(i); })
     .style("fill", "none")
@@ -198,7 +213,7 @@ export default function RadarChart(id, data, options) {
 
   //Append the circles
   blobWrapper.selectAll(".radarCircle")
-    .data(function(d,i) { return d; })
+    .data(function(d,i) { return d.data; })
     .enter().append("circle")
     .attr("class", "radarCircle")
     .attr("r", cfg.dotRadius)
@@ -211,7 +226,7 @@ export default function RadarChart(id, data, options) {
   //////// Append invisible circles for tooltip ///////////
   /////////////////////////////////////////////////////////
 
-        //Set up the small tooltip for when you hover over a circle
+  //Set up the small tooltip for when you hover over a circle
   let tooltip = g.append("text")
     .attr("class", "tooltip")
     .style("opacity", 0);

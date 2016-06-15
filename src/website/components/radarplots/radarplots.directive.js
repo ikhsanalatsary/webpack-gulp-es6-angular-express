@@ -47,7 +47,7 @@ class RadarplotsDirective {
     };
 
     //Call function to draw the Radar chart
-    RadarChart("#radar-plots-div", processedData, radarChartOptions);
+    RadarChart("#radar-plots-div", processedData, this.scope.vm.dataLabels, radarChartOptions);
   }
 
 

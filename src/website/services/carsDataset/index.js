@@ -29,6 +29,7 @@ class CarsDataset {
       let numericProps = _.keys(_.pickBy(response.data.propertiesTypes, (v, k) => v === 'number'));
       return this.$q.all(requests).then((values) => {
         return {dataStats: response.data.numericalPropertiesStats,
+                dataLabels: _.map(values, v => v.data.car),
                 data: _.map(values, v => _.pick(v.data, numericProps))};
       });
     });
