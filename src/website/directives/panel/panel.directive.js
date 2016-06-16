@@ -13,6 +13,7 @@ class PanelDirective {
   }
 
   link(scope, element) {
+    if (__TEST__) return;
     var panel = this.panelsManager.getPanel(scope.name);
     panel.load().then(() => {
       element.addClass('ng-cloak');

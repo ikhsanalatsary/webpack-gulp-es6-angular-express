@@ -7,7 +7,10 @@ import angularmocks from 'angular-mocks';
 import registerAngularModule from 'registerAngularModule';
 import jquery from 'jquery';
 import lodash from 'lodash';
+import d3 from 'd3';
 import 'bootstrap-webpack!./src/website/bootstrap.config.js';
+import 'bootstrap_dropdowns_enhancement/dist/js/dropdowns-enhancement';
+import 'admin-lte/dist/js/app';
 
 // Import unit tests files (found in __tests__ folders and suffixed by -test.js)
 var testsContext = require.context('./src/website', true, /-test\.js$/);
