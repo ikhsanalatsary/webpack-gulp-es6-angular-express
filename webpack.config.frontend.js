@@ -41,13 +41,6 @@ if (!appConfig.test) {
       name: 'vendors',
       minChunks: Infinity
     }),
-    // Identifies common modules between entries and generated chunks and put them into a commons chunk
-    // that will be asynchronously loaded
-    new webpack.optimize.CommonsChunkPlugin({
-      children: true,
-      async: true,
-      minChunks: 2
-    }),
     // Automatically generate the index.html file including all webpack generated assets
     new HtmlWebpackPlugin({
       title: 'Webpack Angular Test',
