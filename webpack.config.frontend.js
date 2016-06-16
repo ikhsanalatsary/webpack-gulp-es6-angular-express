@@ -86,7 +86,7 @@ module.exports = {
     // It is a good practice to do so as the code it contains is unlikely to change during the application lifetime.
     // This will allow you to do updates to your application, without requiring the users to download the vendors bundle again
     // See http://dmachat.github.io/angular-webpack-cookbook/Split-app-and-vendors.html for more details
-    vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash',
+    vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash', 'd3',
               !appConfig.watch ? 'bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
                                  'bootstrap-webpack!./src/website/bootstrap.config.js',
              'bootstrap_dropdowns_enhancement/dist/js/dropdowns-enhancement',
