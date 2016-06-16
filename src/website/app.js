@@ -2,6 +2,7 @@ import 'admin-lte/dist/css/AdminLTE.css';
 import 'admin-lte/dist/css/skins/_all-skins.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap_dropdowns_enhancement/dist/css/dropdowns-enhancement.css';
+import 'common/googleFonts';
 import './app.css';
 
 import AppDirective from './app.directive';

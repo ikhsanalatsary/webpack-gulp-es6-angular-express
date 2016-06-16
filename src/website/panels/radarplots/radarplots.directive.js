@@ -1,10 +1,6 @@
-import 'common/googleFonts';
-
 import template from './radarplots.html';
 import controller from './radarplots.controller';
-
 import './radarplots.css';
-
 import RadarChart from './radarChart';
 
 class RadarplotsDirective {
