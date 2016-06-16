@@ -8,6 +8,8 @@ if (__PROD__) {
 }
 
 angular.element(document).ready(() => {
+  $('body').addClass('layout-top-nav');
+  $('body').addClass('skin-black-light');
   document.body.innerHTML = '<app> Loading... </app>';
   angular.bootstrap(document, [appModule.name], {});
 });

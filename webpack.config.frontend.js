@@ -95,7 +95,10 @@ module.exports = {
     // See http://dmachat.github.io/angular-webpack-cookbook/Split-app-and-vendors.html for more details
     vendors: ['angular', 'angular-ui-router', 'jquery', 'lodash',
               !appConfig.watch ? 'bootstrap-webpack!./src/website/bootstrap.config.extract.js' :
-                                 'bootstrap-webpack!./src/website/bootstrap.config.js'
+                                 'bootstrap-webpack!./src/website/bootstrap.config.js',
+             'bootstrap_dropdowns_enhancement/dist/js/dropdowns-enhancement',
+             'admin-lte/dist/js/app'
+
     ],
     // The frontend application entry point (bootstrapApp.js)
     // In development mode, we also add webpack-dev-server specific entry points
@@ -146,7 +149,12 @@ module.exports = {
       }, {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url?limit=10000&mimetype=image/svg+xml'
-      }
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        loader: 'url?limit=8192'
+      },
+
     ],
     // Disable parsing of the minified angular dist as it is not needed and it speeds up the webpack build
     noParse: [pathToAngular]

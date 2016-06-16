@@ -4,12 +4,12 @@ module.exports = {
     // add every bootstrap script you need
     "transition": true,
     "alert": false,
-    "button": false,
+    "button": true,
     "carousel": false,
     "collapse": true,
     "dropdown": true,
     "modal": false,
-    "tooltip": false,
+    "tooltip": true,
     "popover": false,
     "scrollspy": false,
     "tab": false,
@@ -53,7 +53,7 @@ module.exports = {
     "close": false,
 
     "modals": false,
-    "tooltip": false,
+    "tooltip": true,
     "popovers": false,
     "carousel": false,
 
