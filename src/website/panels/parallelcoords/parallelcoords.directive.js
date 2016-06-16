@@ -41,7 +41,7 @@ class ParallelCoordsDirective {
           left: 10
         },
         width = window.innerWidth - margin.left - margin.right,
-        height = window.innerHeight - margin.top - margin.bottom - 150;
+        height = 0.95 * window.innerHeight - margin.top - margin.bottom - 150;
 
       let x = d3.scale.ordinal().rangePoints([0, width], 1),
         y = {},

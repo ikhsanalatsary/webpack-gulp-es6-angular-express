@@ -34,8 +34,8 @@ class RadarplotsDirective {
       return ret;
     });
     var margin = {top: 50, right: 10, bottom: 0, left: 10},
-        width = 1100,
-        height = 400;
+        width = 1200,
+        height = 350;
 
     var radarChartOptions = {
       w: width,
