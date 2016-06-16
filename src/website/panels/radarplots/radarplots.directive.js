@@ -5,7 +5,7 @@ import controller from './radarplots.controller';
 
 import './radarplots.css';
 
-import RadarChart from 'common/radarChart';
+import RadarChart from './radarChart';
 
 class RadarplotsDirective {
   constructor() {
