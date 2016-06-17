@@ -7,13 +7,13 @@
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand"><i class="fa fa-times"></i> Datasets</a>
+                    <a class="navbar-brand"></i> Datasets</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li ng-repeat="dataset in datasets">
-                            <a class="dataset-link" ui-sref="{{dataset}}">{{dataset}}</a></li>
+                            <a class="dataset-link" ui-sref="{{dataset.url}}">{{dataset.name}}  <i class="fa fa-{{dataset.icon}}"></i></a></li>
                         </li>
                     </ul>
                 </div>
