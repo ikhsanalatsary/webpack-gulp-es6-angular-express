@@ -25,8 +25,7 @@ const app = registerAngularModule('app', [services.name, directives.module.name,
                     name: 'Cameras',
                     url: 'cameras',
                     icon: 'camera'
-                  },
-
+                  }
                 ];
               })
               .directive('app', AppDirective)

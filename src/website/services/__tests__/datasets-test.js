@@ -3,7 +3,7 @@ import {carsSamples, mockCarsDatasetApi} from 'tests_utils/mock_rest_api';
 
 describe('cars dataset service', function () {
 
-  var httpBackend, carsDatasetSrv;
+  var httpBackend, datasetsSrv;
 
   beforeEach(function () {
     angular.mock.module('app.services');
@@ -16,7 +16,7 @@ describe('cars dataset service', function () {
   }));
 
   it('should fetch the whole cars dataset', function (done) {
-    datasetsSrv.getAllData('cars').then(function(cars) {
+    datasetsSrv.getAllNumericData('cars').then(function(cars) {
       expect(cars).toEqual(carsSamples);
       done();
     });

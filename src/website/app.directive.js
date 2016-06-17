@@ -1,6 +1,7 @@
 import template from './app.html';
 
 class AppDirective {
+
   constructor($timeout) {
     'ngInject';
     this.$timeout = $timeout;
@@ -10,6 +11,7 @@ class AppDirective {
 
   link(scope, element) {
     this.$timeout(() => {
+      $($(".nav li a")[0]).parent().addClass("active");
       $(".nav li a").on("click", function(){
         $(".nav").find(".active").removeClass("active");
         $(this).parent().addClass("active");

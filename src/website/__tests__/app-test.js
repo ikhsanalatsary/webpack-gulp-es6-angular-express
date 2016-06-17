@@ -3,7 +3,7 @@ import {mockCarsDatasetApi} from 'tests_utils/mock_rest_api';
 
 describe('app', function () {
 
-  var scope, controller, compile, httpBackend;
+  var scope, controller, compile, httpBackend, timeout;
 
   beforeEach(function () {
     angular.mock.module('app');
@@ -11,8 +11,9 @@ describe('app', function () {
 
   describe('app controller and directive', function () {
 
-    beforeEach(angular.mock.inject(function ($rootScope, $controller, $compile, $httpBackend) {
+    beforeEach(angular.mock.inject(function ($rootScope, $controller, $compile, $httpBackend, $timeout) {
       scope = $rootScope.$new();
+      timeout = $timeout;
       controller = $controller('appCtrl', {
         '$scope': scope
       });
@@ -22,13 +23,14 @@ describe('app', function () {
     }));
 
     it('should have a datasets list defined with at least one dataset', function () {
-      expect(scope.components).toBeDefined();
-      expect(scope.components.length).toBeGreaterThan(0);
+      expect(scope.datasets).toBeDefined();
+      expect(scope.datasets.length).toBeGreaterThan(0);
     });
 
     it('should create as many entries in the navbar as the number of registered datasets', function() {
       var element = compile("<app></app>")(scope);
       scope.$digest();
+      timeout.flush();
       expect($(element).find('.dataset-link').length).toEqual(scope.datasets.length);
     });
 
