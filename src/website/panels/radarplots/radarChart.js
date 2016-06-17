@@ -12,7 +12,7 @@ d3.tip = d3Tip;
 /////////// Inspired by the code of alangrafu ///////////
 /////////////////////////////////////////////////////////
 
-export default function RadarChart(id, data, labels, options) {
+export default function RadarChart(container, data, labels, options) {
 
   let cfg = {
     w: 600, //Width of the circle
@@ -56,7 +56,7 @@ export default function RadarChart(id, data, labels, options) {
   /////////////////////////////////////////////////////////
 
   //Remove whatever chart with the same id/class was present before
-  d3.select(id).select("div").remove();
+  d3.select(container).select("div").remove();
 
   let tip = d3.tip()
               .attr('class', 'd3-tip')
@@ -66,7 +66,7 @@ export default function RadarChart(id, data, labels, options) {
               });
 
   //Initiate the radar chart SVG
-  let svg = d3.select(id)
+  let svg = d3.select(container)
       .append("div")
       .classed("svg-container", true) //container class to make it responsive
       .append("svg")

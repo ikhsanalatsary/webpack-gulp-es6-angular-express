@@ -11,26 +11,19 @@ class ParallelCoordsDirective {
   constructor() {
     this.restrict = 'E';
     this.template = template;
+    this.scope = {};
     this.controller = controller;
     this.controllerAs = 'vm';
     this.bindToController = true;
-    this.svg = null;
   }
 
   link(scope, element) {
-    this.scope = scope;
-    this.element = element;
-    scope.$on('data_ready', () => this.createVisualization());
-    scope.$on('$destroy', () => {
-      if (this.svg) {
-        this.svg = null;
-      }
-    });
+    scope.$on('data_ready', () => this.createVisualization(scope, element));
     scope.vm.requestData();
   }
 
   // adapted from http://bl.ocks.org/jasondavies/1341281
-  createVisualization() {
+  createVisualization(scope, element) {
 
     let margin = {
         top: 30,
@@ -59,7 +52,7 @@ class ParallelCoordsDirective {
       return g.transition().duration(500);
     };
 
-    let cars = this.scope.vm.data;
+    let cars = scope.vm.data;
 
     let dimensions = d3.keys(cars[0]).filter((d) => {
       return d !== "car" && d !== "id" && d !== "origin" && (y[d] = d3.scale.linear()
@@ -92,7 +85,7 @@ class ParallelCoordsDirective {
       });
     };
 
-    let svg = this.svg = d3.select("#parallel-coords-div")
+    let svg =  d3.select($(element).find('.parallel-coords-container')[0])
       .append("div")
       .classed("svg-container", true) //container class to make it responsive
       .append("svg")
@@ -101,6 +94,10 @@ class ParallelCoordsDirective {
       .classed("svg-content-responsive", true)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    scope.$on('$destroy', () => {
+      svg = null;
+    });
 
     // Extract the list of dimensions and create a scale for each.
     x.domain(dimensions);
@@ -177,11 +174,11 @@ class ParallelCoordsDirective {
       .attr("x", -8)
       .attr("width", 16);
 
-   this.scope.setStraightLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", path);
-                                        svg.selectAll(".background").selectAll("path").attr("d", path);};
+   scope.setStraightLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", path);
+                                   svg.selectAll(".background").selectAll("path").attr("d", path);};
 
-   this.scope.setCurvedLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
-                                      svg.selectAll(".background").selectAll("path").attr("d", curvePath);};
+   scope.setCurvedLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
+                                 svg.selectAll(".background").selectAll("path").attr("d", curvePath);};
 
   }
 }

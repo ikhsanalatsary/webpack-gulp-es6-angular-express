@@ -6,27 +6,25 @@ import RadarChart from './radarChart';
 class RadarplotsDirective {
   constructor() {
     this.restrict = 'E';
-    this.scope = {};
     this.template = template;
+    this.scope = {};
     this.controller = controller;
     this.controllerAs = 'vm';
     this.bindToController = true;
   }
 
   link(scope, element) {
-    this.scope = scope;
-    this.element = element;
-    scope.$on('data_ready', () => this.createVisualization());
+    scope.$on('data_ready', () => this.createVisualization(scope, element));
     scope.vm.requestRandomData(3);
   }
 
   // adapted from http://bl.ocks.org/nbremer/21746a9668ffdf6d8242
-  createVisualization() {
-    let processedData = _.map(this.scope.vm.data, d => {
+  createVisualization(scope, element) {
+    let processedData = _.map(scope.vm.data, d => {
       let ret = [];
       _.forOwn(d, (v, k) => ret.push({'axis' : k,
-                                      'value' : (v - this.scope.vm.dataStats[k].min) /
-                                                (this.scope.vm.dataStats[k].max - this.scope.vm.dataStats[k].min)}));
+                                      'value' : (v - scope.vm.dataStats[k].min) /
+                                                (scope.vm.dataStats[k].max - scope.vm.dataStats[k].min)}));
       return ret;
     });
     var margin = {top: 50, right: 10, bottom: 0, left: 10},
@@ -43,7 +41,7 @@ class RadarplotsDirective {
     };
 
     //Call function to draw the Radar chart
-    RadarChart("#radar-plots-div", processedData, this.scope.vm.dataLabels, radarChartOptions);
+    RadarChart($(element).find(".radar-plots-container")[0], processedData, scope.vm.dataLabels, radarChartOptions);
   }
 
 
