@@ -1,4 +1,3 @@
-import uiRouter from 'angular-ui-router';
 import ocLazyLoad from 'oclazyload';
 
 function requireAll(requireContext) {
@@ -15,7 +14,7 @@ var moduleNames = _.map(moduleDescriptionContext.keys(), (k, i) => {
 
 const panels = _.map(requireAll(moduleDescriptionContext), m => m.default);
 
-const panelsModule = registerAngularModule('app.panels', [uiRouter, ocLazyLoad])
+const panelsModule = registerAngularModule('app.panels', [ocLazyLoad])
    .run((panelsManager, $ocLazyLoad, $q) => {
 
      'ngInject';
@@ -31,21 +30,7 @@ const panelsModule = registerAngularModule('app.panels', [uiRouter, ocLazyLoad])
        };
        panelsManager.registerPanel(moduleNames[i], c);
      });
-   })
-  .config(($stateProvider, $urlRouterProvider) => {
-
-    'ngInject';
-
-    $urlRouterProvider.otherwise(panels[0].url);
-
-    _.each(panels, (c, i) =>
-      $stateProvider
-        .state(c.url, {
-          url: '/' + c.url,
-          template: '<panel data-name="'+moduleNames[i]+'"></panel>',
-        }
-      ));
-  });
+   });
 
 export default {
   module: panelsModule,

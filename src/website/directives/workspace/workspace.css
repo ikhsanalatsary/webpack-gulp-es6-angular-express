@@ -1,0 +1,5 @@
+.grid-stack-item:-webkit-full-screen { width: 100% !important; height: 100% !important }
+.grid-stack-item:-moz-full-screen { width: 100% !important; height: 100% !important }
+.grid-stack-item:-ms-full-screen { width: 100% !important; height: 100% !important }
+.grid-stack-item:-o-full-screen { width: 100% !important; height: 100% !important }
+.grid-stack-item:full-screen { width: 100% !important; height: 100% !important }

@@ -1,0 +1,39 @@
+<section class="content-header">
+  <!-- Button trigger modal -->
+  <div class="clearfix">
+    <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#myModal">
+      Add Panel
+    </button>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="workspaceController">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Select a panel to add in the workspace</h4>
+        </div>
+        <div class="modal-body">
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default panel-button" ng-model="panelToCreate">{{availablePanelsNames[0]}}<span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="panel in availablePanelsNames">
+                  <input type="radio" id="{{panel}}" name="panelSelector" ng-checked="{{panel == availablePanelsNames[0]}}">
+                  <label for="{{panel}}">{{panel}}</label>
+                </li>
+              </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addSelectedPanel()">Add panel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="content" ng-controller="workspaceController">
+  <div class="row">
+    <div class="grid-stack" />
+  </div>
+</section>

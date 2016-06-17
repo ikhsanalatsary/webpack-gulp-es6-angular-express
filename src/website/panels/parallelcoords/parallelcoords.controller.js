@@ -1,14 +1,14 @@
 class ParallelcoordsController {
 
-  constructor($scope, carsDatasetSrv) {
+  constructor($scope, datasetsSrv) {
     'ngInject';
     this.name = 'parallelcoords';
     this.$scope = $scope;
-    this.carsDatasetSrv = carsDatasetSrv;
+    this.datasetsSrv = datasetsSrv;
   }
 
   requestData() {
-    this.carsDatasetSrv.getAllCarsData().then(data => {
+    this.datasetsSrv.getAllNumericData(this.$scope.$parent.$parent.datasetId).then(data => {
       this.data = data;
       this.$scope.$emit('data_ready');
     });

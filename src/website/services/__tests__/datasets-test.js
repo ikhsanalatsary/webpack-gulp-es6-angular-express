@@ -1,7 +1,7 @@
 import services from '../services';
 import {carsSamples, mockCarsDatasetApi} from 'tests_utils/mock_rest_api';
 
-describe('cars dataset services', function () {
+describe('cars dataset service', function () {
 
   var httpBackend, carsDatasetSrv;
 
@@ -9,14 +9,14 @@ describe('cars dataset services', function () {
     angular.mock.module('app.services');
   });
 
-  beforeEach(angular.mock.inject(function ($httpBackend, _carsDatasetSrv_) {
+  beforeEach(angular.mock.inject(function ($httpBackend, _datasetsSrv_) {
     httpBackend = $httpBackend;
-    carsDatasetSrv = _carsDatasetSrv_;
+    datasetsSrv = _datasetsSrv_;
     mockCarsDatasetApi(httpBackend);
   }));
 
   it('should fetch the whole cars dataset', function (done) {
-    carsDatasetSrv.getAllCarsData().then(function(cars) {
+    datasetsSrv.getAllData('cars').then(function(cars) {
       expect(cars).toEqual(carsSamples);
       done();
     });
@@ -24,7 +24,7 @@ describe('cars dataset services', function () {
   });
 
   it('should fetch two random cars data', function (done) {
-    carsDatasetSrv.getRandomCarsNumericData(2).then(function(carsData) {
+    datasetsSrv.getRandomNumericData('cars', 2).then(function(carsData) {
       expect(carsData.data.length).toEqual(2);
       done();
     });

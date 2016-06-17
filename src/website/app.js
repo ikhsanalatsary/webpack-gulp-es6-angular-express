@@ -10,11 +10,25 @@ import directives from './directives/directives';
 import services from './services/services';
 import panels from './panels/panels';
 
-const app = registerAngularModule('app', [services.name, directives.module.name, panels.module.name])
+import uiRouter from 'angular-ui-router';
+
+const app = registerAngularModule('app', [services.name, directives.module.name, panels.module.name, uiRouter])
               .controller('appCtrl', function($scope) {
                 'ngInject';
-                $scope.components = panels.panelsList;
+                $scope.datasets = ['Cars', 'Cameras'];
               })
-              .directive('app', AppDirective);
+              .directive('app', AppDirective)
+              .config(($stateProvider, $urlRouterProvider) => {
+                'ngInject';
+                $urlRouterProvider.otherwise('/Cars');
+                $stateProvider.state('Cars', {
+                                      url: '/Cars',
+                                      template: '<workspace data-dataset-id="cars"/>',
+                                     })
+                              .state('Cameras', {
+                                      url: '/Cameras',
+                                      template: '<workspace data-dataset-id="cameras"/>',
+                                    });
+              });
 
 export default app;

@@ -21,15 +21,15 @@ describe('app', function () {
       mockCarsDatasetApi(httpBackend);
     }));
 
-    it('should have a components list defined with at least one component', function () {
+    it('should have a datasets list defined with at least one dataset', function () {
       expect(scope.components).toBeDefined();
       expect(scope.components.length).toBeGreaterThan(0);
     });
 
-    it('should create as many entries in the navbar as the number of registered components', function() {
+    it('should create as many entries in the navbar as the number of registered datasets', function() {
       var element = compile("<app></app>")(scope);
       scope.$digest();
-      expect($(element).find('.component-link').length).toEqual(scope.components.length);
+      expect($(element).find('.dataset-link').length).toEqual(scope.datasets.length);
     });
 
   });

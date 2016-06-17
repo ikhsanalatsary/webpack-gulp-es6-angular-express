@@ -65,13 +65,17 @@ export default function RadarChart(container, data, labels, options) {
                 return "<span style='color:"+cfg.color(i)+"'>" + d.label + "</span>";
               });
 
+  var vbW = cfg.w + cfg.margin.left + cfg.margin.right;
+  var vbH = cfg.h + cfg.margin.top + cfg.margin.bottom;
+
   //Initiate the radar chart SVG
   let svg = d3.select(container)
       .append("div")
       .classed("svg-container", true) //container class to make it responsive
+      .style("padding-bottom", (vbW/vbH)*100+"%")
       .append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 " + (cfg.w + cfg.margin.left + cfg.margin.right) + " " + (cfg.h + cfg.margin.top + cfg.margin.bottom))
+      .attr("viewBox", "0 0 " + vbW + " " + vbH)
       .classed("svg-content-responsive", true);
 
   svg.call(tip);

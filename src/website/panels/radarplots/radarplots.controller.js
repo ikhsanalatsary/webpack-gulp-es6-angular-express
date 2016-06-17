@@ -1,14 +1,14 @@
 class RadarplotsController {
 
-  constructor($scope, carsDatasetSrv) {
+  constructor($scope, datasetsSrv) {
     'ngInject';
     this.name = 'radarplots';
     this.$scope = $scope;
-    this.carsDatasetSrv = carsDatasetSrv;
+    this.datasetsSrv = datasetsSrv;
   }
 
   requestRandomData(nbData=3) {
-    this.carsDatasetSrv.getRandomCarsNumericData(nbData).then(carsData => {
+    this.datasetsSrv.getRandomNumericData(this.$scope.$parent.$parent.datasetId, nbData).then(carsData => {
       this.dataStats = carsData.dataStats;
       this.data = carsData.data;
       this.dataLabels = carsData.dataLabels;

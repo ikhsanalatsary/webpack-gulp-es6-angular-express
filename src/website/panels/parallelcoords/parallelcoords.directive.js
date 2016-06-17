@@ -85,12 +85,16 @@ class ParallelCoordsDirective {
       });
     };
 
+    var vbW = width + margin.left + margin.right;
+    var vbH = height + margin.top + margin.bottom;
+
     let svg =  d3.select($(element).find('.parallel-coords-container')[0])
       .append("div")
       .classed("svg-container", true) //container class to make it responsive
+      .style("padding-bottom", (vbW/vbH)*100 + "%")
       .append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+      .attr("viewBox", "0 0 " + vbW + " " + vbH)
       .classed("svg-content-responsive", true)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
