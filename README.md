@@ -81,6 +81,7 @@ Some useful references and repositories about working with [angular](https://ang
   * [Awesome AngularJS](https://github.com/gianarb/awesome-angularjs)
   * [Simple example on how to use Webpack, Angular and ocLazyLoad](https://github.com/voidberg/webpack-angularjs-lazyload)
   * [Lazy loading avec WebPack & AngularJS](http://blog.xebia.fr/2016/03/08/lazy-loading-avec-webpack-angularjs/) (in french)
+  * [Free version of the book about webpack by SurviveJS](http://survivejs.com/webpack/introduction/)
 
 For those interested by working with [angular](https://angularjs.org/) and [ES6](http://es6-features.org/), you can also check those ones :
 
