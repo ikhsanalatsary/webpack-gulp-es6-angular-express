@@ -3,6 +3,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
+var StatsPlugin = require('stats-webpack-plugin');
 
 var appConfig = require('./config');
 
@@ -16,7 +17,12 @@ var webpackPlugins = [
   }),
   // When there are errors while compiling this plugin skips the emitting phase (and recording phase),
   // so there are no assets emitted that include errors.
-  new webpack.NoErrorsPlugin()
+  new webpack.NoErrorsPlugin(),
+  // Generate a JSON file in the build folder containing compilation statistics
+  new StatsPlugin('stats.json', {
+    chunkModules: true,
+    source: false
+  })
 ];
 
 // Recommended webpack plugins when building the application for production  :
