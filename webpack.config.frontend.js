@@ -74,7 +74,13 @@ module.exports = {
       // set angular to the minified dist for faster build
       'angular': pathToAngular,
       // alias the registerAngularModule script
-      'registerAngularModule': path.resolve(__dirname, 'src/website/utils/registerAngularModule.js')
+      'registerAngularModule': path.resolve(__dirname, 'src/website/utils/registerAngularModule.js'),
+      // define aliases for jquery-ui modules in order to use gridstack with freshly released jquery-ui 1.12
+      'jquery-ui/core': path.resolve(__dirname, 'node_modules/jquery-ui/ui/core.js'),
+      'jquery-ui/widget': path.resolve(__dirname, 'node_modules/jquery-ui/ui/widget.js'),
+      'jquery-ui/mouse': path.resolve(__dirname, 'node_modules/jquery-ui/ui/widgets/mouse.js'),
+      'jquery-ui/draggable': path.resolve(__dirname, 'node_modules/jquery-ui/ui/widgets/draggable.js'),
+      'jquery-ui/resizable': path.resolve(__dirname, 'node_modules/jquery-ui/ui/widgets/resizable.js')
     },
     // The root directory (absolute path) that contains the application modules,
     // enables to import modules relatively to it
