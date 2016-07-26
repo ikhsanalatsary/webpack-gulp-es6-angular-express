@@ -19,10 +19,9 @@ var gulp = require('gulp');
 var webpack = require('webpack');
 var path = require('path');
 var colors = require('colors');
-var spawn = require('child_process').spawn;
 var del = require('del');
-var execSync = require('child_process').execSync;
 var fs = require('fs');
+var forever = require('forever');
 
 // Modules required to create a progress bar adding some feedback
 // to each compilation performed by webpack
@@ -187,20 +186,29 @@ gulp.task('watch', ['backend-watch'], function() {
   });
 });
 
+var serverMonitor = null;
+
 // Gulp task to start the application in production mode :
 // the server is launched through the forever utility.
 // It allows to automatically restart it when a crash happens.
 gulp.task('run', ['build'], function(done) {
   // Don't start the express server as there was some errors during the webpack compilation
   if (buildError) process.exit();
-  var server = spawn('./node_modules/.bin/forever', ['./build/server/backend.js'], {
-    stdio: "inherit"
+
+  serverMonitor = new(forever.Monitor)('build/server/backend.js', {
+    'silent': false
   });
 
-  server.on('close', function(code) {
-    console.log('Server process exited with code ' + code);
-    done();
+  serverMonitor.on('restart', function() {
+    console.error('Forever restarting server script attempt #' + serverMonitor.times);
   });
+
+  serverMonitor.on('exit:code', function(code) {
+    console.error('Forever has detected server script exited with code ' + code);
+  });
+
+  serverMonitor.start();
+  forever.startServer(serverMonitor);
 
 });
 
@@ -264,6 +272,9 @@ gulp.task('beautify-js', function() {
 // ===================================================================================
 
 // Ensure that all child processes are killed when hitting Ctrl+C in the console
-process.once('SIGINT', function() {
+process.on('SIGINT', function() {
+  if (serverMonitor) {
+    serverMonitor.child.kill('SIGTERM');
+  }
   process.exit();
 });
