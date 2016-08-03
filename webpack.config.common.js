@@ -17,12 +17,8 @@ var webpackPlugins = [
   }),
   // When there are errors while compiling this plugin skips the emitting phase (and recording phase),
   // so there are no assets emitted that include errors.
-  new webpack.NoErrorsPlugin(),
-  // Generate a JSON file in the build folder containing compilation statistics
-  new StatsPlugin('stats.json', {
-    chunkModules: true,
-    source: false
-  })
+  new webpack.NoErrorsPlugin()
+
 ];
 
 // Recommended webpack plugins when building the application for production  :
@@ -33,7 +29,12 @@ if (!appConfig.test) {
     new webpack.optimize.OccurenceOrderPlugin(true),
     // Search for equal or similar files and deduplicate them in the output.
     // This comes with some overhead for the entry chunk, but can reduce file size effectively.
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.DedupePlugin(),
+    // Generate a JSON file in the build folder containing compilation statistics
+    new StatsPlugin('stats.json', {
+      chunkModules: true,
+      source: false
+    })
   ]);
 }
 
