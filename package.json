@@ -64,7 +64,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.6.3",
-    "forever": "^0.15.1",
+    "forever": "^2.0.0",
     "gridstack": "^0.2.5",
     "gulp": "^3.9.1",
     "gulp-jsbeautifier": "^2.0.3",
@@ -90,6 +90,6 @@
     "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.1"
+    "webpack": "^2.2.0"
   }
 }
