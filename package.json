@@ -38,7 +38,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "admin-lte": "^2.3.3",
+    "admin-lte": "^3.1.0",
     "angular": "^1.5.5",
     "angular-ui-router": "^0.3.0",
     "autoprefixer": "^6.3.6",
