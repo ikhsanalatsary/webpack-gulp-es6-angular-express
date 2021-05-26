@@ -54,7 +54,7 @@
     "bundle-loader": "^0.5.4",
     "colors": "^1.1.2",
     "compression": "^1.6.2",
-    "css-loader": "^0.23.1",
+    "css-loader": "^1.0.0",
     "d3": "^3.5.17",
     "d3-tip": "^0.6.7",
     "deep-merge": "^1.0.0",
